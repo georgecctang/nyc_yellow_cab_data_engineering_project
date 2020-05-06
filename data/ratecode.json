@@ -1,0 +1,7 @@
+{"id":1,"rate":"Standard rate"},
+{"id":2,"rate":"JFK"},
+{"id":3,"rate":"Newark"},
+{"id":4,"rate":"Nassau or Westchester"},
+{"id":5,"rate":"Negotiated fare"},
+{"id":6,"rate":"Group ride"}
+{"id":99,"rate":"UNKNKOWN"}

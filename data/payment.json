@@ -1,0 +1,6 @@
+{"id":1, "payment": "Credit card"},
+{"id":2, "payment": "Cash"},
+{"id":3, "payment": "No charge"},
+{"id":4, "payment": "Dispute"},
+{"id":5, "payment": "Unknown"},
+{"id":6, "payment": "Voided trip"}
