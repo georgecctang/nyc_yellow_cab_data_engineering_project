@@ -1,4 +1,4 @@
-# New York City Yellow Cap Data Engineering Project 
+# New York City Yellow Cab Data Engineering Project 
 ## Introduction
 The iconic Yellow Cab is one of the many for hire vehicles in New York City, with over  7 million trips provided by its fleet every month. Any city dweller would know too well that no two taxi trips are alike, even with the same pickup and dropoff locations. For instance, a trip during rush hour on a snowy day would likely take longer and cost more than one during a sunny morning in the weekend. Understanding factors that affect ride duration and fare would allow Yellow Cab to provide better service. That, in turn, can increase customer satistification and ultimately revenuve, in terms of both usage and service tips. 
  
@@ -55,7 +55,7 @@ This project consists of  the following steps:
 I performed this step in the AWS console with the following settings:  
 		- Instance Type: m5.xlarge  
 		- Number of instances: 3  
-3. ETL 
+3. ETL  
 	Run the script ```etl.py``` in the Jupyter Lab attached to the cluster. The ETL pipeline consists of the following steps:  
 	i. Load and modify weather table  
 	ii. Load and modify trip records table  
