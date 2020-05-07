@@ -56,7 +56,7 @@ I performed this step in the AWS console with the following settings:
 		- Instance Type: m5.xlarge  
 		- Number of instances: 3  
 3. ETL  
-	Run the script ```etl.py``` in the Jupyter Lab attached to the cluster. The ETL pipeline consists of the following steps:  
+	Run the script ```etl.ipynb``` in the Jupyter Lab attached to the cluster. The ETL pipeline consists of the following steps:  
 	i. Load and modify weather table  
 	ii. Load and modify trip records table  
 	iii. Load taxicode, vendor, rate and payment table  
