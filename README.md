@@ -7,8 +7,8 @@ The scope of this project is to create an ETL pipeline that process and combine 
 
 ## Repository Structure
 The ```codes``` file contains the scripts used in this project.  
-The ```data``` file contains some of the data files used in this project. 
-
+The ```data``` file contains some of the data files used in this project.  
+The ```image``` file contains the image files.  
 
 ## Source Data
 ### Trip Records Data
