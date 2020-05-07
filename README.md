@@ -29,6 +29,8 @@ This project consists using the following tools:
 
 ## Data Model
 
+![alt text](https://github.com/georgecctang/nyc_yellow_cab_data_engineering_project/blob/master/image/schema.png "Data Model")
+
 The data model consists of 2 fact tables and 5 dimension tables.
 The trip records fact table connects to the 5 dimension tables, namely vendors, rates, payments, taxizones, and time. 
 The weather fact table is standalone.  
@@ -37,46 +39,46 @@ The two fact tables are connect through the time table.
 ## Exploratory Data Analysis
 The purpose of EDA  is to identify data quality issues. See the file ```/eda.ipynb``` for the detailed descriptions.  
 Overall, the trip records dataset is relatively clean with a only few minor issues:
-1. Some records have VendorID not in the provided data dictionary. *Solution: Modify 			```vendor.json``` to include those VendorID.*
-2. Some records have RatecodeID not in the provided data dictionary. *Solution: Modify 			```rate.json``` to include those RatecodeID.*
+1. Some records have VendorID not in the provided data dictionary. *Solution: Modify ```vendor.json``` to include those VendorID.*
+2. Some records have RatecodeID not in the provided data dictionary. *Solution: Modify ```rate.json``` to include those RatecodeID.*
 3. Some records have out-of-range pickup datetime, e.g. February records in the January dataset. *Solution: Filter out records with out-of-range datetime during data processing in EMR cluster.*
 4. Some records have missing VendorID. *Solution: Filter out records with missing VendorID during data processing in EMR cluster.*
 
 The weather data does not have any data issues. 
 ## Process
-This project consists of  the following steps:
-1. Setup project buckets
-	i. run ```create_s3_bucket.py``` to create project bucket named ```nyc-yellow-cab-project```
-	ii.run ```copy_s3_to_s3.py``` to copy trips record data and taxizone data to project bucket.
-	iii. run ```upload_local_to_s3.py``` to upload weather data, vendor, payment and rate data to project bucket.
-2. Setup EMR Cluster
-I performed this step in the AWS console with the following settings:
-		- Instance Type: m5.xlarge
-		- Number of instances: 3
+This project consists of  the following steps:  
+1. Setup project buckets  
+	i. run ```create_s3_bucket.py``` to create project bucket named ```nyc-yellow-cab-project```  
+	ii.run ```copy_s3_to_s3.py``` to copy trips record data and taxizone data to project bucket.  
+	iii. run ```upload_local_to_s3.py``` to upload weather data, vendor, payment and rate data to project bucket.  
+2. Setup EMR Cluster  
+I performed this step in the AWS console with the following settings:  
+		- Instance Type: m5.xlarge  
+		- Number of instances: 3  
 3. ETL 
-	Run the script ```etl.py``` in the Jupyter Lab attached to the cluster. The ETL pipeline consists of the following steps:
-	i. Load and modify weather table
-	ii. Load and modify trip records table
-	iii. Load taxicode, vendor, rate and payment table
-	iv. Create time table
-	v. Create analytics table by joining trips, time and weather tables
-	vi. Perform two data quality checks: (a) The number of null values in taxi provider (expected result: 0), (b) number of null values in temperature (expected result: 0)
-	vii. Upload the analytics table to the project bucket as parquet files. The key is ```analytics``` and the files are partitioned by year and month.
-4. Read parquet file (Optional)
+	Run the script ```etl.py``` in the Jupyter Lab attached to the cluster. The ETL pipeline consists of the following steps:  
+	i. Load and modify weather table  
+	ii. Load and modify trip records table  
+	iii. Load taxicode, vendor, rate and payment table  
+	iv. Create time table  
+	v. Create analytics table by joining trips, time and weather tables  
+	vi. Perform two data quality checks: (a) The number of null values in taxi provider (expected result: 0), (b) number of null values in temperature (expected result: 0)  
+	vii. Upload the analytics table to the project bucket as parquet files. The key is ```analytics``` and the files are partitioned by year and month.  
+4. Read parquet file (Optional)  
 Use the code in ```read_parquet.py``` to load the parquet files into local drive for data analytics.
 
 ## Data Dictionary
 The data dictionary for the analytics table is included in this repository. 
 ## Scenario Analysis
-This section dissuss a few scenarios that we may encounter in the future, and offer potential solutions.
-**The data was increased by 100x.**
-To account for this, we can use a more powerful instance type and increase the number of instances in the EMR cluser.
-**The pipelines would be run on a daily basis by 7 am every day.**
- We can set up an automated ETL process pipeline in airflow. The steps would include:
-	 - Copy data to S3  
-	 - Inititate EMR cluster
-	 - Load, process and join tables
-	 - Perform quality check
-	 - Load processed data tables to S3
-**The database needed to be accessed by 100+ people**
-For this particular application, only the data engineering team would need to process the data with EMR. The final analytics dataset for analysis will be stored in the project bucket for download. Access by multiple people should not be a problem. 
+This section dissuss a few scenarios that we may encounter in the future, and offer potential solutions.  
+**The data was increased by 100x.**  
+To account for this, we can use a more powerful instance type and increase the number of instances in the EMR cluser.  
+**The pipelines would be run on a daily basis by 7 am every day.**  
+ We can set up an automated ETL process pipeline in airflow. The steps would include:  
+	 - Copy data to S3   
+	 - Inititate EMR cluster  
+	 - Load, process and join tables  
+	 - Perform quality check  
+	 - Load processed data tables to S3  
+**The database needed to be accessed by 100+ people**  
+For this particular application, only the data engineering team would need to process the data with EMR. The final analytics dataset for analysis will be stored in the project bucket for download. Access by multiple people should not be a problem.   
