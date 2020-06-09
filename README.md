@@ -1,6 +1,6 @@
 # New York City Yellow Cab Data Engineering Project 
 ## Introduction
-The iconic Yellow Cab is one of the many for hire vehicles in New York City, with over  7 million trips provided by its fleet every month. Any city dweller would know too well that no two taxi trips are alike, even with the same pickup and dropoff locations. For instance, a trip during rush hour on a snowy day would likely take longer and cost more than one during a sunny morning in the weekend. Understanding factors that affect ride duration and fare would allow Yellow Cab to provide better service. That, in turn, can increase customer satistification and ultimately revenuve, in terms of both usage and service tips. 
+The iconic Yellow Cab is one of the many for hire vehicles in New York City, with its fleet providing over 7 million trips every month. Any city dweller would know too well that no two taxi trips are alike, even with the same pickup and dropoff locations. For instance, a trip during rush hour on a snowy day would likely take longer and cost more than one during a sunny morning in the weekend. Understanding factors that affect ride duration and fare would allow Yellow Cab to provide better service. That, in turn, can increase customer satistification and ultimately revenuve, in terms of both usage and service tips. 
  
 ## Scope
 The scope of this project is to create an ETL pipeline that process and combine trip record and weather data, and create datasets ready for use for analytics.  Data scientists and analysts can then use this dataset to identify factors that affect ride duration and fare, and develop recommendations for service improvement. 
@@ -81,4 +81,5 @@ To account for this, we can use a more powerful instance type and increase the n
 	 - Perform quality check  
 	 - Load processed data tables to S3  
 **The database needed to be accessed by 100+ people**  
-For this particular application, only the data engineering team would need to process the data with EMR. The final analytics dataset for analysis will be stored in the project bucket for download. Access by multiple people should not be a problem.   
+For this particular application, only the data engineering team would need to process the data with EMR. The final analytics dataset for analysis will be stored in the project S3 bucket for access.  
+S3 is by design suitable for frequent access by multiple users. If it happens that the data will be accessed by users from multiple regions, one option for reducing latency is to replicate the data to a bucket in another region. It can be automated with S3's cross region replication (CRR) feature. 
