@@ -72,14 +72,15 @@ The data dictionary for the analytics table is included in this repository.
 ## Scenario Analysis
 This section dissuss a few scenarios that we may encounter in the future, and offer potential solutions.  
 **The data was increased by 100x.**  
-To account for this, we can use a more powerful instance type and increase the number of instances in the EMR cluser.  
+To account for this, we can use a more powerful instance type and increase the number of instances in the EMR cluster.  
 **The pipelines would be run on a daily basis by 7 am every day.**  
  We can set up an automated ETL process pipeline in airflow. The steps would include:  
-	 - Copy data to S3   
+	 - Copy data from NYC's S3 bucket to project S3 bucket  
 	 - Inititate EMR cluster  
-	 - Load, process and join tables  
+	 - Load data from S3 to EMR cluster
+	 - Process data in EMR   
 	 - Perform quality check  
 	 - Load processed data tables to S3  
 **The database needed to be accessed by 100+ people**  
 For this particular application, only the data engineering team would need to process the data with EMR. The final analytics dataset for analysis will be stored in the project S3 bucket for access.  
-S3 is by design suitable for frequent access by multiple users. If it happens that the data will be accessed by users from multiple regions, one option for reducing latency is to replicate the data to a bucket in another region. It can be automated with S3's cross region replication (CRR) feature. 
+S3 is designed for frequent access by multiple users. If the data will be accessed by users from another region (e.g. Australia), one option for reducing latency is to replicate the data to a bucket in that region. It can be automated with S3's cross region replication (CRR) feature, where files uploaded to the project bucket will be automatically replicated to the replica bucket. 
